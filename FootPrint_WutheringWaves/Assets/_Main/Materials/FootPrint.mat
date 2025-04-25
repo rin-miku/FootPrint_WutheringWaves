@@ -109,7 +109,7 @@ Material:
     - _ClickPos: {r: 0.50631905, g: 0.720675, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FootUV: {r: 0.27333686, g: 0.718719, b: 0, a: 0}
+    - _FootUV: {r: 0.6288189, g: 0.46966523, b: 0, a: 0}
     - _MianTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _OverlayTexColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

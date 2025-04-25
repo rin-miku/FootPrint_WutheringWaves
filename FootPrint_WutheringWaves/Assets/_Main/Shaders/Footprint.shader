@@ -16,9 +16,13 @@ Shader "Custom/Footprint"
             #pragma fragment frag
             #include "UnityCG.cginc"
 
+            #define MAX_FOOTPRINTS 100
+
             sampler2D _FootprintNormal;
             sampler2D _FootprintMask;
-            float4 _FootUV;
+            int _FootprintCount;
+            float4 _FootUVArray[MAX_FOOTPRINTS];
+            float _FadeArray[MAX_FOOTPRINTS];
 
             struct v2f
             {
@@ -36,20 +40,26 @@ Shader "Custom/Footprint"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float2 center = _FootUV.xy;
+                float4 encodedNormal = float4(0, 0, 0, 0);
 
-                float2 delta = i.uv - center;
-                if (abs(delta.x) > 0.0625 || abs(delta.y) > 0.0625)
-                    discard;
+                for(int idx = 0; idx < _FootprintCount; idx++)
+                {
+                    float2 center = _FootUVArray[idx].xy;
 
-                float2 localUV = delta / 0.125 + 0.5;
-                if(tex2D(_FootprintMask, localUV).r < 0.5)
-                    discard;
+                    float2 delta = i.uv - center;
+                    if (abs(delta.x) > 0.0625 || abs(delta.y) > 0.0625)
+                        continue;
 
-                float3 decalNormal = UnpackNormal(tex2D(_FootprintNormal, localUV));
-                float4 encodedNormal;
-                encodedNormal.rgb = decalNormal * 0.5 + 0.5;
-                encodedNormal.a = 1;
+                    float2 localUV = delta / 0.125 + 0.5;
+                    if(tex2D(_FootprintMask, localUV).r < 0.5)
+                        continue;
+
+                    float3 decalNormal = UnpackNormal(tex2D(_FootprintNormal, localUV));
+                    float fade = _FootUVArray[idx].z;
+
+                    encodedNormal.rgb = decalNormal * 0.5 + 0.5;
+                    encodedNormal.a = fade;
+                }
 
                 return encodedNormal;
             }
