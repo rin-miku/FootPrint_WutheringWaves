@@ -10,6 +10,7 @@ Shader "Custom/CustomTerrain"
         _NormalMap ("Normal Map", 2D) = "bump" {}
         _OverlayNormalMap ("Overlay Normal Map", 2D) = "bump" {}
         _HeightMap ("Height Map", 2D) = "white" {}
+        _HeightScale ("Height Scale", Range(0,10)) = 0.5
         _BottomColor("Bottom Color", Color) = (0.8,0.8,1,1)
         _TessellationAmount("Tessellation Amount", Range(1,32)) = 8
     }
@@ -20,7 +21,13 @@ Shader "Custom/CustomTerrain"
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
+        #pragma surface surf Standard fullforwardshadows tessellate:tess nolightmap
+
+        float _TessellationAmount;
+        float tess()
+        {
+            return _TessellationAmount;
+        }
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
@@ -40,11 +47,12 @@ Shader "Custom/CustomTerrain"
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
+        float _HeightScale;
         fixed4 _BottomColor;
 
         void vert(inout appdata_full v)
         {
-            float offset = tex2D(_HeightMap, float4(v.texcoord.xy, 0, 0)).r;
+            float offset = tex2Dlod(_HeightMap, float4(v.texcoord.xy, 0, 0)).r * _HeightScale;
             v.vertex.y += offset;
         }
 
