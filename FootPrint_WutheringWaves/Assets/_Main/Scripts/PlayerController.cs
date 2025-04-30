@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Debug.Log(animator.pivotWeight);
+
         UpdateAnimator();
     }
 

@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2
   runSpeed: 5
-  rotationSpeed: 720
+  rotationSpeed: 250
   rb: {fileID: 841131435}
   animator: {fileID: 2131834563}
 --- !u!136 &841131434
@@ -537,10 +537,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
-  meshRenderer: {fileID: 1164804117}
+  terrain: {fileID: 0}
   drawFootprintMaterial: {fileID: 2100000, guid: 3550b9994ce17d94c956da309121bdf0, type: 2}
   showTime: 3
   fadeOutTime: 3
+--- !u!4 &1211670372 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3334300620702576546, guid: 83628a2e699576147adabb30587f44d4, type: 3}
+  m_PrefabInstance: {fileID: 1985494196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1430093026
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +558,7 @@ GameObject:
   - component: {fileID: 1430093028}
   - component: {fileID: 1430093027}
   - component: {fileID: 1430093030}
+  - component: {fileID: 1430093031}
   m_Layer: 3
   m_Name: Terrain
   m_TagString: Ground
@@ -650,6 +656,31 @@ MonoBehaviour:
   terrain: {fileID: 1430093028}
   terrainMat: {fileID: 2100000, guid: 0547cb243a9861446a4ee02da84f8225, type: 2}
   terrainTrailHeightMat: {fileID: 2100000, guid: a2ff7cc5972b3524eb648b19d833ffe6, type: 2}
+  footsTransform:
+  - {fileID: 1211670372}
+  - {fileID: 1725070982}
+--- !u!114 &1430093031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430093026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2270ed20e189184cb9b1446cecae128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 963194227}
+  terrain: {fileID: 1430093028}
+  drawFootprintMaterial: {fileID: 2100000, guid: 3550b9994ce17d94c956da309121bdf0, type: 2}
+  showTime: 3
+  fadeOutTime: 3
+--- !u!4 &1725070982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8377594453251391387, guid: 83628a2e699576147adabb30587f44d4, type: 3}
+  m_PrefabInstance: {fileID: 1985494196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1985494196
 PrefabInstance:
   m_ObjectHideFlags: 0

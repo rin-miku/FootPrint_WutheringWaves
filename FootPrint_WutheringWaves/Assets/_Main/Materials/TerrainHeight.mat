@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TrialTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 79738452a3bb22c4d899f6dec0a17aa9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -85,5 +85,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TrialPosition: {r: -1, g: -1, b: 0, a: 0}
+    - _TrialPosition: {r: 0.6400577, g: 0.61805624, b: 0, a: 0}
   m_BuildTextureStacks: []

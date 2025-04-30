@@ -11,7 +11,7 @@ public class FootPrintData
 public class FootPrint : MonoBehaviour
 {
     public Camera mainCamera;
-    public MeshRenderer meshRenderer;
+    public Terrain terrain;
     public Material drawFootprintMaterial;
 
     public float showTime = 3f;
@@ -23,7 +23,7 @@ public class FootPrint : MonoBehaviour
 
     void Start()
     {
-        material = meshRenderer.materials[0];
+        material = terrain.materialTemplate;
 
         footprintNormalRT = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGB32);
         footprintNormalRT.Create();
@@ -71,11 +71,11 @@ public class FootPrint : MonoBehaviour
 
         Graphics.Blit(null, footprintNormalRT, drawFootprintMaterial);
 
-        material.SetTexture("_BumpMap2", footprintNormalRT);
+        terrain.materialTemplate.SetTexture("_OverlayNormalMap", footprintNormalRT);
     }
 
     void OnGUI()
     {
-        GUI.DrawTexture(new Rect(0, 0, 256, 256), footprintNormalRT, ScaleMode.ScaleToFit);
+        GUI.DrawTexture(new Rect(256, 0, 256, 256), footprintNormalRT, ScaleMode.ScaleToFit);
     }
 }
