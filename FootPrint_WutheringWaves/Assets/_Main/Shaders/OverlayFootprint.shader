@@ -1,4 +1,4 @@
-Shader "Custom/OverlayFootprint"
+Shader "Custom/OverlayFootPrint"
 {
     Properties
     {

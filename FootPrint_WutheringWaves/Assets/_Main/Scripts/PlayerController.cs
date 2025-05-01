@@ -3,35 +3,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
-    public float runSpeed = 10f;
-    public float rotationSpeed = 10f;
+    public float rotationSmoothTime = 0.1f;
 
     public Rigidbody rb;
     public Animator animator;
 
-    private float moveSpeed;
-    private bool isGrounded;
     private Vector3 inputDirection;
+    private float currentVelocity;
 
     void Update()
     {
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxis("Vertical")).normalized;
+
         if (inputDirection != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime));
+            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, rotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
         }
-
-        if (isGrounded)
-        {
-            moveSpeed = walkSpeed;
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                moveSpeed = runSpeed;
-            }
-        }
-
-        //Debug.Log(animator.pivotWeight);
 
         UpdateAnimator();
     }
@@ -40,7 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         if (inputDirection != Vector3.zero)
         {
-            Vector3 move = inputDirection * moveSpeed;
+            Vector3 move = inputDirection * walkSpeed;
             rb.MovePosition(rb.position + move * Time.fixedDeltaTime);
         }
     }
@@ -49,38 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         float speedPercent = 0f;
 
-        if (inputDirection != Vector3.zero)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                speedPercent = 1f;
-            }
-            else
-            {
-                speedPercent = 0.5f;
-            }
-        }
-        else
-        {
-            speedPercent = 0f;
-        }
+        speedPercent = inputDirection != Vector3.zero ? 0.5f : 0f;
 
         animator.SetFloat("Speed", speedPercent, 0.1f, Time.deltaTime);
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.transform.tag.Equals("Ground"))
-        { 
-            isGrounded = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.transform.tag.Equals("Ground"))
-        {
-            isGrounded = false;
-        }
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NormalLit
+  m_Name: OverlayFootPrint
   m_Shader: {fileID: 4800000, guid: f675bddc9e209f84a95d2c5920f916a9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

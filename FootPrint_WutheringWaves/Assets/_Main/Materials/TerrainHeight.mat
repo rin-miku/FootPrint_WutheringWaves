@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TrialTexture:
-        m_Texture: {fileID: 2800000, guid: 79738452a3bb22c4d899f6dec0a17aa9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4610749fdc3b8de4cbbd2b32ea01e3b4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -79,11 +79,11 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TrailOffset: 0.05
+    - _TrailOffset: 0.1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TrialPosition: {r: 0.506169, g: 0.6939903, b: 0, a: 0}
+    - _TrialPosition: {r: 0.48281375, g: 0.56315017, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -1,20 +1,23 @@
-Shader "Custom/Footprint"
+Shader "Custom/FootPrint"
 {
     Properties
     {
         _FootprintNormal ("Normal", 2D) = "bump" {}
         _FootprintMask ("Mask", 2D) = "white" {}
         _FootUV ("UV Position", Vector) = (0, 0, 0, 0)
+        _FootprintScale ("Footprint Scale", float) = 0.01 
     }
     SubShader
     {
         Pass
         {
-            ZTest Always Cull Off ZWrite Off
+            Tags { "RenderType"="Opaque" }
+            LOD 200
+
             CGPROGRAM
-            #pragma vertex vert
+            #include "UnityCustomRenderTexture.cginc"
+            #pragma vertex CustomRenderTextureVertexShader
             #pragma fragment frag
-            #include "UnityCG.cginc"
 
             #define MAX_FOOTPRINTS 100
 
@@ -22,23 +25,9 @@ Shader "Custom/Footprint"
             sampler2D _FootprintMask;
             int _FootprintCount;
             float4 _FootUVArray[MAX_FOOTPRINTS];
-            float _FadeArray[MAX_FOOTPRINTS];
+            float _FootprintScale;
 
-            struct v2f
-            {
-                float4 pos : SV_POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            v2f vert(appdata_img v)
-            {
-                v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = v.texcoord;
-                return o;
-            }
-
-            fixed4 frag(v2f i) : SV_Target
+            float4 frag(v2f_customrendertexture i) : SV_Target
             {
                 float4 encodedNormal = float4(0, 0, 0, 0);
 
@@ -46,11 +35,17 @@ Shader "Custom/Footprint"
                 {
                     float2 center = _FootUVArray[idx].xy;
 
-                    float2 delta = i.uv - center;
-                    if (abs(delta.x) > 0.0625 || abs(delta.y) > 0.0625)
+                    float2 delta = i.localTexcoord.xy - center;
+                    float angle = radians(_FootUVArray[idx].w);
+                    float2x2 rotMatrix = float2x2(
+                        cos(angle), -sin(angle),
+                        sin(angle), cos(angle));
+                    delta = mul(rotMatrix, delta);
+
+                    if (abs(delta.x) > _FootprintScale || abs(delta.y) > _FootprintScale)
                         continue;
 
-                    float2 localUV = delta / 0.125 + 0.5;
+                    float2 localUV = delta / _FootprintScale / 2 + 0.5;
                     if(tex2D(_FootprintMask, localUV).r < 0.5)
                         continue;
 

@@ -9,7 +9,6 @@ Shader "Custom/TerrainHeight"
     {
         Tags { "RenderType"="Opaque" }
         LOD 200
-        Lighting Off
 
         Pass
         {
@@ -28,9 +27,10 @@ Shader "Custom/TerrainHeight"
                 float4 oldHeight = tex2D(_SelfTexture2D, i.localTexcoord.xy);
                 
                 float2 pos = i.localTexcoord.xy - _TrialPosition;
+                float angle = radians(_TrailAngle);
                 float2x2 rotMatrix = float2x2(
-                    cos(_TrailAngle), -sin(_TrailAngle),
-                    sin(_TrailAngle), cos(_TrailAngle));
+                    cos(angle), -sin(angle),
+                    sin(angle), cos(angle));
                 pos = mul(rotMatrix, pos);
                 pos = pos / _TrailOffset + float2(0.5, 0.5);
                 
