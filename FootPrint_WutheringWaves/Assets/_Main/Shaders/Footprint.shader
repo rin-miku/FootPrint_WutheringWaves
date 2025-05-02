@@ -31,6 +31,7 @@ Shader "Custom/FootPrint"
             {
                 float4 encodedNormal = float4(0, 0, 0, 0);
 
+                [unroll]
                 for(int idx = 0; idx < _FootprintCount; idx++)
                 {
                     float2 center = _FootUVArray[idx].xy;

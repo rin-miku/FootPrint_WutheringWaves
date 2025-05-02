@@ -20,11 +20,8 @@ Shader "Custom/CustomTerrain"
         LOD 200
 
         CGPROGRAM
-        #pragma target 3.0
-        #pragma surface surf Standard 
-        #pragma vertex:vert 
-        #pragma tessellate:tess
-        #pragma addshadow 
+        #pragma target 4.6
+        #pragma surface surf Standard vertex:vert tessellate:tess addshadow
 
         float _TessellationAmount;
         float tess()

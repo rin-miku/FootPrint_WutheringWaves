@@ -42,7 +42,6 @@ public class FootPrint : MonoBehaviour
         footprintMat.SetVectorArray("_FootUVArray", uvs);
 
         terrainMat.SetTexture("_OverlayNormalMap", customRT);
-        
     }
 
     void Update()
